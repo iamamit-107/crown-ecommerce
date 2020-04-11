@@ -3,17 +3,22 @@ import "./SignIn.styles.scss";
 import { useState } from "react";
 import FomrInput from "../Fomr-Input/FormInput.component";
 import CustomButton from "../Custom-Button/CustomButton";
-import { signInWithGoogle } from "../../Firebase/Firebase.utils";
+import { signInWithGoogle, auth } from "../../Firebase/Firebase.utils";
 
 const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        setEmail("");
-        setPassword("");
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            setEmail("");
+            setPassword("");
+        } catch (err) {
+            console.log("error in sign in: ", err.message);
+        }
     };
 
     const handleChange = (event) => {
@@ -25,9 +30,6 @@ const SignIn = () => {
             setPassword(value);
         }
     };
-
-    console.log(email, password);
-
     return (
         <div className="sign-in">
             <h1>I already have an account</h1>
