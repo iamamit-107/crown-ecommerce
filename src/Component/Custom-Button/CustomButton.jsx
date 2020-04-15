@@ -2,10 +2,15 @@ import React from "react";
 import "./CustomButton.scss";
 import { signInWithGoogle } from "../../Firebase/Firebase.utils";
 
-const CustomButton = ({ children, isGoogleSignIn, ...otherProps }) => {
+const CustomButton = ({
+    children,
+    inverted,
+    isGoogleSignIn,
+    ...otherProps
+}) => {
     return (
         <button
-            className={`${
+            className={`${inverted ? "inverted" : ""}${
                 isGoogleSignIn ? "sign-in-with-google" : ""
             } custom-button`}
             {...otherProps}
